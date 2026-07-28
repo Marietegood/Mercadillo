@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#006b3c" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Sorteo · Mercadillo Solidario</title>
+    <link rel="stylesheet" href="styles.css?v=20260727-4" />
+  </head>
+  <body class="internal-body">
+    <header class="internal-header">
+      <a class="internal-brand" href="index.html">
+        <img src="assets/logo-onduembalaje.png" alt="Onduembalaje · Hinojosa Packaging" />
+        <span>Mercadillo solidario</span>
+      </a>
+      <nav class="internal-nav" aria-label="Área de gestión">
+        <a href="admin.html">Pedidos</a>
+        <a href="catalogo-admin.html">Productos</a>
+        <a class="active" href="sorteo.html">Sorteo</a>
+        <a href="index.html">Ver tienda</a>
+        <button id="logout-button" type="button" hidden>Cerrar sesión</button>
+      </nav>
+    </header>
+
+    <main class="admin-main">
+      <div class="admin-titlebar">
+        <div>
+          <p class="eyebrow">Asignación transparente</p>
+          <h1>Sorteo</h1>
+          <p>Ordenadores, pantallas, tablets e impresoras · máximo un premio por persona.</p>
+          <div class="mode-pill" id="mode-pill">
+            <span class="mode-dot"></span>
+            <span id="mode-label">Cargando participantes…</span>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="button button-secondary button-small" id="export-results" type="button">Exportar resultado</button>
+          <button class="button button-danger button-small" id="reset-raffle" type="button">Reiniciar sorteo</button>
+        </div>
+      </div>
+
+      <section class="raffle-layout">
+        <div class="raffle-stage" id="raffle-stage">
+          <p class="eyebrow light">Regla automática</p>
+          <h2 id="raffle-heading">Un premio principal como máximo por persona.</h2>
+          <p id="raffle-description">
+            El sistema elimina inscripciones duplicadas, mezcla el orden de los productos y selecciona
+            cada ganador al azar entre quienes lo solicitaron y aún no han obtenido otro equipo principal.
+          </p>
+          <button class="button button-primary" id="draw-button" type="button">Realizar sorteo completo</button>
+          <div class="raffle-orbit" aria-hidden="true"></div>
+        </div>
+        <div class="raffle-side" aria-label="Datos del sorteo">
+          <article class="raffle-info">
+            <strong id="raffle-people">0</strong>
+            <span>personas participantes</span>
+          </article>
+          <article class="raffle-info">
+            <strong id="raffle-requests">0</strong>
+            <span>preferencias registradas</span>
+          </article>
+          <article class="raffle-info">
+            <strong id="raffle-prizes">28</strong>
+            <span>unidades principales disponibles</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="winners-panel">
+        <div class="winners-header">
+          <div>
+            <p class="eyebrow">Acta de resultados</p>
+            <h2>Personas adjudicatarias</h2>
+          </div>
+          <span class="muted" id="results-meta">Sorteo pendiente</span>
+        </div>
+        <div class="winners-list" id="winners-list"></div>
+        <div class="panel-empty" id="winners-empty">
+          <span aria-hidden="true">✦</span>
+          <h2>Aún no se ha realizado el sorteo</h2>
+          <p>Cuando pulses el botón, el resultado quedará guardado y podrá exportarse.</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="login-gate" id="login-dialog">
+      <form id="login-form">
+        <div class="lock-mark" aria-hidden="true">●</div>
+        <h2>Acceso al sorteo</h2>
+        <p>Introduce el PIN de gestión para consultar las inscripciones.</p>
+        <label class="sr-only" for="admin-pin">PIN de gestión</label>
+        <input id="admin-pin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" required />
+        <p class="form-feedback" id="login-feedback" role="status"></p>
+        <button class="button button-primary full-width" type="submit">Entrar</button>
+      </form>
+    </dialog>
+
+    <dialog class="success-dialog" id="confirm-reset">
+      <div class="success-mark" aria-hidden="true">↺</div>
+      <h2>¿Reiniciar el sorteo?</h2>
+      <p>Se borrará el acta actual. Las solicitudes de las personas se mantendrán.</p>
+      <div class="admin-actions" style="justify-content: center">
+        <button class="button button-secondary" id="cancel-reset" type="button">Cancelar</button>
+        <button class="button button-danger" id="accept-reset" type="button">Reiniciar</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="config.js?v=20260727-4"></script>
+    <script src="catalogo.js?v=20260727-4"></script>
+    <script src="api.js?v=20260727-4"></script>
+    <script src="sorteo.js?v=20260727-4"></script>
+  </body>
+</html>

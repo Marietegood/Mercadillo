@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#006b3c" />
+    <meta
+      name="description"
+      content="Mercadillo solidario de Onduembalaje: una segunda vida para equipos informáticos y una ayuda para quien la necesita."
+    />
+    <title>Mercadillo Solidario · Onduembalaje</title>
+    <link rel="stylesheet" href="styles.css?v=20260727-4" />
+  </head>
+  <body>
+    <a class="skip-link" href="#catalogo">Saltar al catálogo</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Inicio">
+        <img src="assets/logo-onduembalaje.png" alt="Onduembalaje · Hinojosa Packaging" />
+      </a>
+      <nav class="header-nav" aria-label="Navegación principal">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#catalogo">Productos</a>
+        <button class="cart-button" id="open-cart" type="button" aria-label="Abrir selección">
+          <span>Mi selección</span>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-photo" role="img" aria-label="Equipo de Onduembalaje frente a la planta"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow light">Onduembalaje · Hinojosa Packaging</p>
+          <h1>Lo que ya no usamos<br /><em>todavía puede ayudar.</em></h1>
+          <p class="hero-copy">
+            Damos una segunda vida a equipos informáticos y convertimos cada aportación en ayuda.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#catalogo">Descubrir productos</a>
+            <a class="button button-ghost" href="#como-funciona">Ver las reglas</a>
+          </div>
+        </div>
+        <div class="hero-stat" aria-label="Inventario disponible">
+          <strong id="hero-stock">53</strong>
+          <span>artículos<br />disponibles</span>
+        </div>
+      </section>
+
+      <section class="purpose-strip" aria-label="Finalidad del mercadillo">
+        <p>
+          <span class="purpose-icon" aria-hidden="true">♥</span>
+          <strong>100 % solidario.</strong>
+          <span id="association-copy">Toda la recaudación se destinará a una asociación sin ánimo de lucro.</span>
+        </p>
+      </section>
+
+      <section class="how container" id="como-funciona">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">Sencillo y transparente</p>
+            <h2>¿Cómo funciona?</h2>
+          </div>
+          <p class="section-intro">
+            Elige lo que te interesa y registra tu solicitud. No se realiza ningún pago ahora.
+          </p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3>Elige</h3>
+            <p>Añade a tu selección todos los artículos que te interesen.</p>
+          </article>
+          <article class="step-card featured">
+            <span class="step-number">02</span>
+            <h3>Regístrate</h3>
+            <p>Indica tu nombre y apellidos para guardar correctamente tu solicitud.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3>Asignamos</h3>
+            <p>Los equipos principales con varias solicitudes se resolverán mediante sorteo.</p>
+          </article>
+        </div>
+        <div class="raffle-rule">
+          <div class="rule-badge" aria-hidden="true">1</div>
+          <div>
+            <strong>Una persona, un único equipo principal</strong>
+            <p>
+              Puedes apuntarte a varios ordenadores, pantallas, tablets o impresoras, pero solo podrás
+              resultar adjudicatario de uno de ellos. El resto de artículos se gestiona por disponibilidad.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalogo">
+        <div class="container">
+          <div class="section-heading catalog-heading">
+            <div>
+              <p class="eyebrow">Inventario del mercadillo</p>
+              <h2>Encuentra algo útil</h2>
+            </div>
+            <label class="search-box">
+              <span class="sr-only">Buscar productos</span>
+              <span aria-hidden="true">⌕</span>
+              <input id="search-input" type="search" placeholder="Buscar en el catálogo" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="category-tabs" id="category-tabs" role="tablist" aria-label="Categorías"></div>
+          <div class="catalog-meta">
+            <p id="result-count" aria-live="polite"></p>
+            <button class="text-button" id="clear-filters" type="button">Ver todo</button>
+          </div>
+          <div class="product-grid" id="product-grid"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <span aria-hidden="true">⌕</span>
+            <h3>No hemos encontrado ese artículo</h3>
+            <p>Prueba con otra búsqueda o vuelve a ver todo el catálogo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing-cta">
+        <div class="container closing-grid">
+          <div>
+            <p class="eyebrow light">Cada elección suma</p>
+            <h2>Una segunda vida.<br />Una ayuda real.</h2>
+          </div>
+          <p>
+            Los artículos proceden de renovación interna. Antes de la entrega confirmaremos su estado,
+            accesorios disponibles y aportación final.
+          </p>
+          <a class="button button-light" href="#catalogo">Volver al catálogo</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <img src="assets/logo-onduembalaje.png" alt="Onduembalaje · Hinojosa Packaging" />
+        <p>Mercadillo Solidario 2026 · Alovera</p>
+        <a id="contact-link" href="mailto:mario.bueno@hinojosagroup.com">Contacto</a>
+      </div>
+      <div class="footer-links">
+        <span>Uso interno</span>
+        <a href="admin.html">Gestión</a>
+        <a href="sorteo.html">Sorteo</a>
+        <a class="editor-entry" href="catalogo-admin.html">Editar catálogo</a>
+      </div>
+    </footer>
+
+    <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-labelledby="cart-title" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">Tu solicitud</p>
+          <h2 id="cart-title">Mi selección</h2>
+        </div>
+        <button class="icon-button" id="close-cart" type="button" aria-label="Cerrar selección">×</button>
+      </div>
+      <div class="cart-content" id="cart-content"></div>
+      <div class="cart-footer">
+        <div class="cart-summary">
+          <span>Aportación orientativa</span>
+          <strong id="cart-total">0 €</strong>
+        </div>
+        <p>Solo se confirmará el importe de los artículos finalmente asignados.</p>
+        <button class="button button-primary full-width" id="checkout-button" type="button">
+          Continuar con la solicitud
+        </button>
+      </div>
+    </aside>
+
+    <dialog class="welcome-dialog" id="welcome-dialog">
+      <div class="welcome-visual" aria-hidden="true">
+        <span>♥</span>
+      </div>
+      <div class="welcome-content">
+        <p class="eyebrow">Bienvenido</p>
+        <h2>Esto es una tienda solidaria</h2>
+        <p>
+          Todo el dinero recaudado será donado íntegramente a una asociación sin ánimo de lucro.
+          Aquí, cada artículo encuentra una segunda vida y cada aportación se convierte en ayuda.
+        </p>
+        <div class="welcome-note">
+          <strong>Importante</strong>
+          <span>Solo podrá tocarte un producto principal: ordenador, pantalla, tablet o impresora.</span>
+        </div>
+        <button class="button button-primary full-width" id="accept-welcome" type="button">
+          Entendido, quiero participar
+        </button>
+      </div>
+    </dialog>
+
+    <dialog class="form-dialog" id="checkout-dialog">
+      <form id="order-form">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">Último paso</p>
+            <h2>Registra tu solicitud</h2>
+          </div>
+          <button class="icon-button" id="close-checkout" type="button" aria-label="Cerrar formulario">×</button>
+        </div>
+        <p class="dialog-intro">
+          Usaremos estos datos únicamente para gestionar el mercadillo, el sorteo y la entrega.
+        </p>
+        <div class="form-grid">
+          <label>
+            <span>Nombre *</span>
+            <input name="firstName" type="text" autocomplete="given-name" required maxlength="80" />
+          </label>
+          <label>
+            <span>Apellidos *</span>
+            <input name="lastName" type="text" autocomplete="family-name" required maxlength="120" />
+          </label>
+          <label>
+            <span>Correo corporativo</span>
+            <input name="email" type="email" autocomplete="email" maxlength="160" placeholder="Opcional" />
+          </label>
+          <label>
+            <span>Departamento / turno</span>
+            <input name="department" type="text" maxlength="120" placeholder="Opcional" />
+          </label>
+          <label class="full-field">
+            <span>Observaciones</span>
+            <textarea name="notes" rows="3" maxlength="500" placeholder="Algo que debamos saber"></textarea>
+          </label>
+        </div>
+        <label class="check-row">
+          <input name="acceptRules" type="checkbox" required />
+          <span>
+            He leído las reglas y acepto que, entre ordenadores, pantallas, tablets e impresoras,
+            solo se me pueda adjudicar un producto.
+          </span>
+        </label>
+        <div class="order-preview" id="order-preview"></div>
+        <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+        <button class="button button-primary full-width" id="submit-order" type="submit">
+          Enviar mi solicitud
+        </button>
+      </form>
+    </dialog>
+
+    <dialog class="success-dialog" id="success-dialog">
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <h2>Solicitud registrada</h2>
+      <p id="success-message"></p>
+      <strong class="order-code" id="order-code"></strong>
+      <button class="button button-primary full-width" id="close-success" type="button">Volver al mercadillo</button>
+    </dialog>
+
+    <dialog class="image-viewer-dialog" id="image-viewer-dialog" aria-labelledby="image-viewer-title">
+      <div class="image-viewer-shell">
+        <button class="image-viewer-close" id="close-image-viewer" type="button" aria-label="Cerrar imagen">×</button>
+        <img id="image-viewer-image" alt="" />
+        <p id="image-viewer-title"></p>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="config.js?v=20260727-4"></script>
+    <script src="catalogo.js?v=20260727-4"></script>
+    <script src="api.js?v=20260727-4"></script>
+    <script src="tienda.js?v=20260727-4"></script>
+  </body>
+</html>

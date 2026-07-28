@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#006b3c" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Editor de catálogo · Mercadillo Solidario</title>
+    <link rel="stylesheet" href="styles.css?v=20260727-4" />
+  </head>
+  <body class="internal-body">
+    <header class="internal-header">
+      <a class="internal-brand" href="index.html">
+        <img src="assets/logo-onduembalaje.png" alt="Onduembalaje · Hinojosa Packaging" />
+        <span>Mercadillo solidario</span>
+      </a>
+      <nav class="internal-nav" aria-label="Área de gestión">
+        <a href="admin.html">Pedidos</a>
+        <a class="active" href="catalogo-admin.html">Productos</a>
+        <a href="sorteo.html">Sorteo</a>
+        <a href="index.html">Ver tienda</a>
+        <button id="logout-button" type="button" hidden>Cerrar sesión</button>
+      </nav>
+    </header>
+
+    <main class="admin-main catalog-manager" id="catalog-manager">
+      <div class="admin-titlebar">
+        <div>
+          <p class="eyebrow">Editor visual</p>
+          <h1>Catálogo</h1>
+          <p>Añade, edita, oculta o retira productos sin tocar el código de la página.</p>
+          <div class="mode-pill" id="mode-pill">
+            <span class="mode-dot"></span>
+            <span id="mode-label">Comprobando inventario…</span>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <a class="button button-secondary button-small" href="index.html#catalogo">Ver tienda</a>
+          <button class="button button-primary button-small" id="new-product-button" type="button">
+            + Nuevo producto
+          </button>
+        </div>
+      </div>
+
+      <section class="stats-grid product-stats" aria-label="Resumen del catálogo">
+        <article class="stat-card">
+          <span>Referencias</span>
+          <strong id="stat-products">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Unidades publicadas</span>
+          <strong id="stat-units">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>En sorteo</span>
+          <strong id="stat-raffle">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Ocultos</span>
+          <strong id="stat-hidden">0</strong>
+        </article>
+      </section>
+
+      <section class="admin-panel catalog-panel">
+        <div class="panel-toolbar catalog-toolbar">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <span class="sr-only">Buscar productos</span>
+            <input id="product-search" type="search" placeholder="Buscar por nombre o descripción" />
+          </label>
+          <select id="product-category-filter" aria-label="Filtrar por categoría"></select>
+          <select id="product-status-filter" aria-label="Filtrar por publicación">
+            <option value="todos">Todos</option>
+            <option value="publicados">Publicados</option>
+            <option value="ocultos">Ocultos</option>
+            <option value="agotados">Agotados</option>
+          </select>
+          <span class="refresh-label" id="product-count-label"></span>
+        </div>
+
+        <div class="manager-product-grid" id="manager-product-grid"></div>
+        <div class="panel-empty" id="products-empty" hidden>
+          <span aria-hidden="true">⌕</span>
+          <h2>No hay productos con estos filtros</h2>
+          <p>Cambia la búsqueda o crea una nueva referencia.</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="login-gate" id="login-dialog">
+      <form id="login-form">
+        <div class="lock-mark" aria-hidden="true">●</div>
+        <h2>Acceso al editor</h2>
+        <p>Introduce el PIN privado que aparece al iniciar el mercadillo.</p>
+        <label class="sr-only" for="admin-pin">PIN de gestión</label>
+        <input
+          id="admin-pin"
+          name="pin"
+          type="password"
+          inputmode="numeric"
+          autocomplete="current-password"
+          placeholder="PIN"
+          required
+        />
+        <p class="form-feedback" id="login-feedback" role="status"></p>
+        <button class="button button-primary full-width" type="submit">Entrar</button>
+      </form>
+    </dialog>
+
+    <dialog class="product-editor-dialog" id="product-dialog">
+      <form id="product-form">
+        <div class="dialog-header product-dialog-header">
+          <div>
+            <p class="eyebrow" id="product-form-eyebrow">Nueva referencia</p>
+            <h2 id="product-form-title">Añadir producto</h2>
+          </div>
+          <button class="icon-button" id="close-product-dialog" type="button" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="product-editor-layout">
+          <div class="image-editor-column">
+            <span class="field-label">Fotografía del producto *</span>
+            <div
+              class="image-dropzone"
+              id="image-dropzone"
+              role="button"
+              tabindex="0"
+              aria-label="Seleccionar y ajustar la fotografía del producto"
+            >
+              <img id="image-preview" alt="Vista previa de la fotografía" draggable="false" hidden />
+              <span class="image-upload-prompt" id="image-upload-prompt">
+                <span class="upload-symbol" aria-hidden="true">↑</span>
+                <strong>Selecciona o arrastra una foto</strong>
+                <small>También puedes pegarla · JPG, PNG o WEBP</small>
+              </span>
+              <span class="image-reposition-hint" id="image-reposition-hint" hidden>
+                Amplía y arrastra para mover
+              </span>
+              <input id="product-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" hidden />
+            </div>
+
+            <div class="image-adjustments" id="image-adjustments" hidden>
+              <div class="adjustments-heading">
+                <div>
+                  <strong>Ajustar encuadre</strong>
+                  <span>Mueve la foto dentro del recuadro y decide su tamaño.</span>
+                </div>
+              </div>
+              <label class="zoom-control" for="image-zoom">
+                <span>Tamaño</span>
+                <input id="image-zoom" type="range" min="100" max="240" step="1" value="100" />
+                <output id="image-zoom-value" for="image-zoom">100 %</output>
+              </label>
+              <div class="image-adjustment-actions">
+                <button class="mini-action" id="center-image" type="button">Centrar</button>
+                <button class="mini-action" id="fit-image" type="button">Ver completa</button>
+                <button class="mini-action" id="change-photo" type="button">Cambiar foto</button>
+              </div>
+            </div>
+            <button class="text-button remove-photo-button" id="remove-photo" type="button" hidden>
+              Quitar fotografía
+            </button>
+
+            <div class="live-card-preview" aria-label="Vista previa de la tarjeta">
+              <p class="eyebrow">Vista previa</p>
+              <div class="preview-mini-card">
+                <div class="preview-mini-media" id="card-preview-media"><span>✦</span></div>
+                <div>
+                  <span id="card-preview-category">Categoría</span>
+                  <strong id="card-preview-name">Nombre del producto</strong>
+                  <small id="card-preview-price">0 € · aportación sugerida</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-fields-column">
+            <div class="form-grid">
+              <label class="full-field">
+                <span>Nombre del producto *</span>
+                <input name="name" type="text" required maxlength="180" placeholder="Ej. Monitor HP 24 pulgadas" />
+              </label>
+              <label>
+                <span>Categoría *</span>
+                <select name="category" id="product-category" required></select>
+              </label>
+              <label>
+                <span>Aportación sugerida (€) *</span>
+                <input name="price" type="number" required min="0" max="100000" step="0.01" value="0" />
+              </label>
+              <label>
+                <span>Unidades disponibles *</span>
+                <input name="quantity" type="number" required min="0" max="999" step="1" value="1" />
+              </label>
+              <label class="full-field">
+                <span>Descripción</span>
+                <textarea
+                  name="note"
+                  rows="4"
+                  maxlength="700"
+                  placeholder="Modelo, características, accesorios incluidos o estado del producto"
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="publication-settings">
+              <label class="switch-row">
+                <span>
+                  <strong>Publicado en la tienda</strong>
+                  <small>Si lo desactivas, podrás seguir editándolo pero nadie lo verá.</small>
+                </span>
+                <input name="active" type="checkbox" checked />
+                <span class="switch-control" aria-hidden="true"></span>
+              </label>
+              <label class="switch-row">
+                <span>
+                  <strong>Participa en el sorteo</strong>
+                  <small>Actívalo para ordenadores, pantallas, tablets e impresoras.</small>
+                </span>
+                <input name="raffle" id="product-raffle" type="checkbox" />
+                <span class="switch-control" aria-hidden="true"></span>
+              </label>
+            </div>
+
+            <p class="form-feedback" id="product-feedback" role="status" aria-live="polite"></p>
+            <div class="editor-form-actions">
+              <button class="button button-secondary" id="cancel-product" type="button">Cancelar</button>
+              <button class="button button-primary" id="save-product" type="submit">Publicar producto</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="success-dialog" id="delete-product-dialog">
+      <div class="success-mark danger-mark" aria-hidden="true">!</div>
+      <h2>¿Eliminar este producto?</h2>
+      <p id="delete-product-message">
+        La referencia desaparecerá del catálogo. Si solo quieres retirarla temporalmente, es mejor ocultarla.
+      </p>
+      <div class="admin-actions" style="justify-content: center">
+        <button class="button button-secondary" id="cancel-delete-product" type="button">Cancelar</button>
+        <button class="button button-danger" id="confirm-delete-product" type="button">Eliminar definitivamente</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="config.js?v=20260727-4"></script>
+    <script src="catalogo.js?v=20260727-4"></script>
+    <script src="api.js?v=20260727-4"></script>
+    <script src="catalogo-admin.js?v=20260727-4"></script>
+  </body>
+</html>

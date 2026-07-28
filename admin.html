@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#006b3c" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Gestión de pedidos · Mercadillo Solidario</title>
+    <link rel="stylesheet" href="styles.css?v=20260727-4" />
+  </head>
+  <body class="internal-body">
+    <header class="internal-header">
+      <a class="internal-brand" href="index.html">
+        <img src="assets/logo-onduembalaje.png" alt="Onduembalaje · Hinojosa Packaging" />
+        <span>Mercadillo solidario</span>
+      </a>
+      <nav class="internal-nav" aria-label="Área de gestión">
+        <a class="active" href="admin.html">Pedidos</a>
+        <a href="catalogo-admin.html">Productos</a>
+        <a href="sorteo.html">Sorteo</a>
+        <a href="index.html">Ver tienda</a>
+        <button id="logout-button" type="button" hidden>Cerrar sesión</button>
+      </nav>
+    </header>
+
+    <main class="admin-main" id="admin-main">
+      <div class="admin-titlebar">
+        <div>
+          <p class="eyebrow">Panel de gestión</p>
+          <h1>Pedidos</h1>
+          <p>Consulta, completa y actualiza todas las solicitudes del mercadillo.</p>
+          <div class="mode-pill" id="mode-pill">
+            <span class="mode-dot"></span>
+            <span id="mode-label">Comprobando almacenamiento…</span>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="button button-secondary button-small" id="import-button" type="button">Importar JSON</button>
+          <button class="button button-secondary button-small" id="export-json-button" type="button">Guardar copia</button>
+          <button class="button button-secondary button-small" id="export-csv-button" type="button">Exportar Excel/CSV</button>
+          <button class="button button-primary button-small" id="manual-order-button" type="button">+ Añadir pedido</button>
+          <input id="import-file" type="file" accept="application/json,.json" hidden />
+        </div>
+      </div>
+
+      <section class="stats-grid" aria-label="Resumen de pedidos">
+        <article class="stat-card">
+          <span>Solicitudes</span>
+          <strong id="stat-orders">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Personas</span>
+          <strong id="stat-people">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Artículos solicitados</span>
+          <strong id="stat-items">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Pendientes</span>
+          <strong id="stat-pending">0</strong>
+        </article>
+      </section>
+
+      <section class="admin-panel">
+        <div class="panel-toolbar">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <span class="sr-only">Buscar pedidos</span>
+            <input id="admin-search" type="search" placeholder="Buscar persona, producto o código" />
+          </label>
+          <select id="status-filter" aria-label="Filtrar por estado">
+            <option value="todos">Todos los estados</option>
+            <option value="Nueva">Nueva</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Asignado">Asignado</option>
+            <option value="Contactado">Contactado</option>
+            <option value="Entregado">Entregado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+          <span class="refresh-label" id="refresh-label">Actualización automática cada 5 s</span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="orders-table" id="orders-table">
+            <thead>
+              <tr>
+                <th>Fecha / código</th>
+                <th>Persona</th>
+                <th>Selección</th>
+                <th>Estado</th>
+                <th>Notas internas</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="orders-body"></tbody>
+          </table>
+        </div>
+        <div class="panel-empty" id="orders-empty" hidden>
+          <span aria-hidden="true">✦</span>
+          <h2>Todavía no hay solicitudes</h2>
+          <p>Los nuevos pedidos aparecerán aquí automáticamente.</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="login-gate" id="login-dialog">
+      <form id="login-form">
+        <div class="lock-mark" aria-hidden="true">●</div>
+        <h2>Acceso de gestión</h2>
+        <p>Introduce el PIN que aparece al iniciar el servidor del mercadillo.</p>
+        <label class="sr-only" for="admin-pin">PIN de gestión</label>
+        <input id="admin-pin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" required />
+        <p class="form-feedback" id="login-feedback" role="status"></p>
+        <button class="button button-primary full-width" type="submit">Entrar</button>
+      </form>
+    </dialog>
+
+    <dialog class="admin-dialog" id="manual-order-dialog">
+      <form id="manual-order-form">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">Registro interno</p>
+            <h2>Añadir pedido</h2>
+          </div>
+          <button class="icon-button" id="close-manual-order" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Nombre *</span>
+            <input name="firstName" type="text" required maxlength="80" />
+          </label>
+          <label>
+            <span>Apellidos *</span>
+            <input name="lastName" type="text" required maxlength="120" />
+          </label>
+          <label>
+            <span>Correo</span>
+            <input name="email" type="email" maxlength="160" />
+          </label>
+          <label>
+            <span>Departamento / turno</span>
+            <input name="department" type="text" maxlength="120" />
+          </label>
+          <label class="full-field">
+            <span>Observaciones</span>
+            <textarea name="notes" rows="2" maxlength="500"></textarea>
+          </label>
+        </div>
+        <div class="admin-field">
+          <span>Productos *</span>
+          <div class="product-checklist" id="manual-products"></div>
+        </div>
+        <p class="form-feedback" id="manual-feedback" role="status"></p>
+        <button class="button button-primary full-width" type="submit">Guardar pedido</button>
+      </form>
+    </dialog>
+
+    <dialog class="success-dialog" id="confirm-dialog">
+      <div class="success-mark" aria-hidden="true">?</div>
+      <h2 id="confirm-title">Confirmar acción</h2>
+      <p id="confirm-message"></p>
+      <div class="admin-actions" style="justify-content: center">
+        <button class="button button-secondary" id="confirm-cancel" type="button">Cancelar</button>
+        <button class="button button-danger" id="confirm-accept" type="button">Eliminar</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="config.js?v=20260727-4"></script>
+    <script src="catalogo.js?v=20260727-4"></script>
+    <script src="api.js?v=20260727-4"></script>
+    <script src="admin.js?v=20260727-4"></script>
+  </body>
+</html>
